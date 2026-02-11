@@ -8,6 +8,7 @@ dependencies = [
     "numpy>=2.0.0",
     "matplotlib>=3.9.0",
     "notebook", # Jupyter Notebook本体
+    "nbstripout>=0.9.0",
 ]
 
 [project.optional-dependencies]
