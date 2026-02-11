@@ -1,0 +1,24 @@
+[project]
+name = "python-exercise"
+version = "0.1.0"
+description = "Numpy and Matplotlib exercise environment"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0.0",
+    "matplotlib>=3.9.0",
+    "notebook", # Jupyter Notebook本体
+]
+
+[project.optional-dependencies]
+# 将来的なAPI開発用
+api = [
+    "fastapi",
+    "uvicorn[standard]",
+]
+
+[tool.uv]
+# コンテナ内での利用を想定し、常に仮想環境を同期するように設定
+dev-dependencies = [
+    "ipykernel",
+]
