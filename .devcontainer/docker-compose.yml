@@ -8,7 +8,3 @@ services:
       # コンテナ内の.venvをホスト側の.venvで上書きしないように匿名ボリューム化
       - /app/.venv
     command: /bin/sh -c "while sleep 1000; do :; done"
-    # FastAPIのデプロイ時などにポートを開放
-    ports:
-      - "8888:8888" # Jupyter用
-      - "8000:8000" # FastAPI用
