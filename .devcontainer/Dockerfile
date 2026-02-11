@@ -1,25 +1,31 @@
 FROM python:3.12-slim-bookworm
 
-# uvのインストール
+# 1. uvのインストール
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# システムの依存関係（matplotlibの描画などに必要な場合がある）
+# 2. システム依存関係のインストール
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# 3. 一般ユーザー 'vscode' を作成 (chownの前に実行)
+RUN useradd -m -s /bin/bash vscode
+
+# 4. 作業ディレクトリの設定と所有権の付与
 WORKDIR /app
+RUN chown vscode:vscode /app
 
-# 依存関係のコピーとインストール
-# キャッシュを効率化するため、まず設定ファイルだけコピー
-RUN --mount=type=cache,target=/root/.cache/uv \
+# 5. 以降の操作を vscode ユーザーで行う
+USER vscode
+
+# 6. 依存関係の同期
+# キャッシュマウントの uid を 1000 (vscodeユーザー) に指定
+RUN --mount=type=cache,target=/home/vscode/.cache/uv,uid=1000 \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    uv sync --frozen --no-install-project
+    uv sync --no-install-project
 
-# 環境変数の設定（uvが作成した仮想環境を優先的に使用）
+# 7. 仮想環境のパスを優先的に使用
 ENV PATH="/app/.venv/bin:$PATH"
 
-# デフォルトのコマンド（Dev Containerで上書きされるが、単体起動用）
 CMD ["python3"]
