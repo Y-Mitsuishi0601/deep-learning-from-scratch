@@ -1,5 +1,5 @@
 {
-  "name": "Python Exercise (uv)",
+  "name": "deep-learning-devcontainer",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/app",
