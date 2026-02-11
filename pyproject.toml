@@ -8,7 +8,6 @@ dependencies = [
     "numpy>=2.0.0",
     "matplotlib>=3.9.0",
     "notebook", # Jupyter Notebook本体
-    "nbstripout>=0.9.0",
 ]
 
 [project.optional-dependencies]
@@ -18,8 +17,8 @@ api = [
     "uvicorn[standard]",
 ]
 
-[tool.uv]
-# コンテナ内での利用を想定し、常に仮想環境を同期するように設定
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "ipykernel",
+    "nbstripout>=0.9.0",
 ]
