@@ -12,3 +12,8 @@ __pycache__/
 
 # --- Jupyter Notebook ---
 .ipynb_checkpoints
+*.log
+
+# --- Data ---
+data/*
+!data/README.md

@@ -14,3 +14,7 @@ ENV UV_PROJECT_ENVIRONMENT=/app/.venv \
 
 # 4. 作業ディレクトリの設定と所有権の付与
 WORKDIR /app
+RUN chown -R vscode:vscode /app
+
+# 5. .venvディレクトリを事前に作成して権限を設定
+RUN mkdir -p /app/.venv && chown -R vscode:vscode /app/.venv

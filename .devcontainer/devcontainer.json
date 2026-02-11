@@ -24,5 +24,19 @@
     }
   },
   // コンテナ起動後にライブラリを最新状態に同期
-  "postCreateCommand": "uv sync"
+  "postCreateCommand": "uv sync",
+  // コンテナ起動後にJupyterLabをバックグラウンドで起動
+  "postStartCommand": "nohup jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --NotebookApp.token='' --NotebookApp.password='' > /tmp/jupyter.log 2>&1 &",
+  // ポートフォワーディングの設定
+  "forwardPorts": [8888, 8000],
+  "portsAttributes": {
+    "8888": {
+      "label": "JupyterLab",
+      "onAutoForward": "notify"
+    },
+    "8000": {
+      "label": "FastAPI",
+      "onAutoForward": "silent"
+    }
+  }
 }
